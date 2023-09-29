@@ -29,7 +29,7 @@ app.get('/Customers/:id', (req, res) => {
             res.status(500).send(err);   
         } else {
             if (!row) {
-                res.status(404).send('Customers not found');
+                res.status(404).send('Customer not found');
             }
             else {
                 res.json(row)
