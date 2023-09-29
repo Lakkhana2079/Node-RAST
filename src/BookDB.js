@@ -6,14 +6,14 @@ const db = new sqlite3.Database('./Database/BookDB.sqlite');
 
 app.use(express.json());
 
-db.run(`CREATE TABLE IF NOT EXISTS books (
+db.run(`CREATE TABLE IF NOT EXISTS BookDBs (
     id INTEGER PRIMARY KEY,
     title TEXT,
     author TEXT
 )`);
 
-app.get('/books', (req, res) => {
-    db.all('SELECT * FROM books', (err, rows) => {
+app.get('/BookDBs', (req, res) => {
+    db.all('SELECT * FROM BookDBs', (err, rows) => {
         if(err) {
             res.status(500).send(err);   
         }
@@ -23,8 +23,8 @@ app.get('/books', (req, res) => {
     });
 });
 
-app.get('/books/:id', (req, res) => {
-    db.get('SELECT * FROM books WHERE id = ?', req.params.id, (err, rows) => {
+app.get('/BookDBs/:id', (req, res) => {
+    db.get('SELECT * FROM BookDBs WHERE id = ?', req.params.id, (err, rows) => {
         if(err) {
             res.status(500).send(err);   
         } else {
@@ -38,31 +38,31 @@ app.get('/books/:id', (req, res) => {
     });
 });
 
-app.post('/books', (req, res) => {
-    const book = req.body;
-    db.run('INSERT INTO books (title, author) VALUES (?, ?)', book.title, book.author, function(err) {
+app.post('/BookDBs', (req, res) => {
+    const BookDB = req.body;
+    db.run('INSERT INTO BookDBs (title, author) VALUES (?, ?)', BookDB.title, BookDB.author, function(err) {
     if (err) {
         res.status(500).send(err);
     } else {
-        book.id = this.lastID;
-        res.send(book); 
+        BookDB.id = this.lastID;
+        res.send(BookDB); 
     }
     });   
 });
 
-app.put('/books/:id', (req, res) => {
-    const book = req.body;
-    db.run('UPDATE books SET title = ?, author = ? WHERE id = ?', book.title, book.author, req.params.id, function(err) {
+app.put('/BookDBs/:id', (req, res) => {
+    const BookDB = req.body;
+    db.run('UPDATE BookDBs SET title = ?, author = ? WHERE id = ?', BookDB.title, BookDB.author, req.params.id, function(err) {
     if (err) {
         res.status(500).send(err);
     } else {
-        res.send(book); 
+        res.send(BookDB); 
     }
     });   
 });
 
-app.delete('/books/:id', (req, res) => {
-    db.run('DELETE FROM books WHERE id = ?', req.params.id, function(err) {
+app.delete('/BookDBs/:id', (req, res) => {
+    db.run('DELETE FROM BookDBs WHERE id = ?', req.params.id, function(err) {
     if (err) {
         res.status(500).send(err);
     } else {
