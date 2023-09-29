@@ -40,7 +40,7 @@ app.get('/Customers/:id', (req, res) => {
 
 app.post('/Customers', (req, res) => {
     const Customer = req.body;
-    db.run('INSERT INTO Customers (title, author) VALUES (?, ?)', Customer.title, Customer.book.author, function(err) {
+    db.run('INSERT INTO Customers (title, author) VALUES (?, ?)', Customer.title, Customer.author, function(err) {
     if (err) {
         res.status(500).send(err);
     } else {
